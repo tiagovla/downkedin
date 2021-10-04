@@ -12,12 +12,27 @@ HEADERS = {"Content-Type": "application/json", "user-agent": "Mozilla/5.0"}
 
 
 def check_path_exists(filename: str):
+    """
+    Function to check whether a path exists.
+
+    If it does not exist, it creates it.
+
+    Parameters
+    ----------
+    filename : str
+        Path to be created if it does not already exist.
+
+    Raises
+    ------
+    Exception:
+        Race condition exception.
+    """
     if not os.path.exists(os.path.dirname(filename)):
         try:
             os.makedirs(os.path.dirname(filename))
         except OSError as exc:  # Guard against race condition
             if exc.errno != errno.EEXIST:
-                raise
+                raise Exception("Race condition.")
 
 
 class Fetcher:
@@ -25,6 +40,19 @@ class Fetcher:
         self.session = session
 
     async def _fetch_url(self, url: str) -> dict:
+        """
+        Private fetch url function.
+
+        Parameters
+        ----------
+        url : str
+            String url to be fetched by a get request.
+
+        Returns
+        -------
+        dict:
+            Dictionary containing the json result of the request.
+        """
         cookies = self.session.cookie_jar.filter_cookies(HOME_URL)
         csrf_token = cookies["JSESSIONID"].value
         headers = HEADERS | {"Csrf-Token": csrf_token}
@@ -60,7 +88,7 @@ class Fetcher:
         )
         return (await self._fetch_url(url))["elements"][0]
 
-    async def fetch_download_link(self, course_slug, video_slug) -> str:
+    async def fetch_download_link(self, course_slug: str, video_slug: str) -> str:
         url = (
             f"https://www.linkedin.com/learning-api/detailedCourses?"
             f"addParagraphsToTranscript=false&courseSlug="
@@ -70,7 +98,7 @@ class Fetcher:
         return data["elements"][0]["selectedVideo"]["url"]["progressiveUrl"]
 
     async def download_file(
-        self, url: str, filename: str, path: str, chunk_size=32 * 1024
+        self, url: str, filename: str, path: str, chunk_size: int = 32 * 1024
     ) -> None:
         check_path_exists(path + filename)
         options = {

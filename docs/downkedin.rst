@@ -25,7 +25,7 @@ Main Login Strategies
    :show-inheritance:
 
 Wrapper Login Strategies
-~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. autoclass:: downkedin.login.PicleStrategy
    :members:
