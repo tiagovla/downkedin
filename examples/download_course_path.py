@@ -8,8 +8,8 @@ from downkedin.login import PicleStrategy, UsernamePasswordStrategy
 
 async def main():
     """Run the main downloader application."""
-    username = "***REMOVED***"
-    password = "***REMOVED***"
+    username = "username"
+    password = "password"
 
     backup_strat = UsernamePasswordStrategy(username, password)
     # this wrapper will save your cookies in a cookies.bin file.
