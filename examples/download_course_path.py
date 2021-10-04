@@ -8,8 +8,8 @@ from downkedin.login import PicleStrategy, UsernamePasswordStrategy
 
 async def main():
     """Run the main downloader application."""
-    username = "your_user_name"
-    password = "your_password"
+    username = "***REMOVED***"
+    password = "***REMOVED***"
 
     backup_strat = UsernamePasswordStrategy(username, password)
     # this wrapper will save your cookies in a cookies.bin file.
@@ -20,11 +20,12 @@ async def main():
 
         slug = "advance-your-skills-in-python-8969631"
         course_path = await dl.fetch_course_path(slug)
+        course_path.print()
 
-        for course in course_path.children:
-            tasks = [down for down in course.download()]
-            for coro in tqdm.as_completed(tasks, total=len(tasks)):
-                await coro
+        # for course in course_path.children:
+        #     tasks = [down for down in course.download()]
+        #     for coro in tqdm.as_completed(tasks, total=len(tasks)):
+        #         await coro
 
 
 if __name__ == "__main__":

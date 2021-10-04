@@ -62,6 +62,18 @@ class LoginStrategy(ABC):
 
 class UsernamePasswordStrategy(LoginStrategy):
     def __init__(self, username: str, password: str):
+        """
+        Username password Strategy.
+
+        Represent a main login strategy.
+
+        Parameters
+        ----------
+        username : str
+            Username used on linkedin learning.
+        password : str
+            Password used on linkedin learning.
+        """
         self.username = username
         self.password = password
 
@@ -77,6 +89,18 @@ class UsernamePasswordStrategy(LoginStrategy):
 
 class PicleStrategy(LoginStrategy):
     def __init__(self, path: str, backup_strategy: LoginStrategy):
+        """
+        Picle wrapper strategy.
+
+        Represent a wrapper using picle capabilities to reuse cookies.
+
+        Parameters
+        ----------
+        path : str
+            File name with path to save the serialized state.
+        backup_strategy : LoginStrategy
+            Backup strategy, usually a Username/Password strategy.
+        """
         self.path = path
         self.backup_strategy = backup_strategy
 

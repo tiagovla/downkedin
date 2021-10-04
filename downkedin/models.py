@@ -10,12 +10,36 @@ from .fetcher import Fetcher
 
 class Downloadable(Protocol):
     async def download(self, session: aiohttp.ClientSession) -> None:
-        """Download all content."""
+        """
+        Download protocol.
+
+        Implement the download protocol.
+
+        Parameters
+        ----------
+        session : aiohttp.ClientSession
+            Session object from aiohttp.
+
+        Returns
+        -------
+        None:
+
+        """
         pass
 
 
 class BaseModel:
     def __init__(self, title: str):
+        """
+        BaseModel class.
+
+        Implements a double association strategy.
+
+        Parameters
+        ----------
+        title : str
+            Title of the associated object.
+        """
         self.parent: BaseModel | None = None
         self.children: List[BaseModel] = []
         self.title = title
@@ -43,6 +67,20 @@ class BaseModel:
 
 class Video(BaseModel):
     def __init__(self, title: str, slug: str, fetcher: Fetcher):
+        """
+        Video class model.
+
+        Represent a video object.
+
+        Parameters
+        ----------
+        title : str
+            Title of the video.
+        slug : str
+            Slug of the video.
+        fetcher : Fetcher
+            Fetcher object used to download the video's content.
+        """
         super().__init__(title)
         self.slug = slug
         self.fetcher = fetcher
@@ -64,18 +102,52 @@ class Video(BaseModel):
 
 class Chapter(BaseModel):
     def __init__(self, title: str):
+        """
+        Chapter class model.
+
+        Represent a chapter object.
+
+        Parameters
+        ----------
+        title : str
+            Title of the chapter.
+        """
         super().__init__(title)
         self.parent: Course
 
 
 class Course(BaseModel):
     def __init__(self, title: str, slug: str):
+        """
+        Course class model.
+
+        Represent a course object.
+
+        Parameters
+        ----------
+        title : str
+            Title of the course.
+        slug : str
+            Slug of the course.
+        """
         super().__init__(title)
         self.slug = slug
 
 
 class CoursePath(BaseModel):
     def __init__(self, title: str, slug: str):
+        """
+        Course path class model.
+
+        Represent a course path object.
+
+        Parameters
+        ----------
+        title : str
+            Title of the course path.
+        slug : str
+            Slug of the course path.
+        """
         super().__init__(title)
         self.slug = slug
 
