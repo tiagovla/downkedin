@@ -60,7 +60,7 @@ class Fetcher:
             ret_json = await response.json()
         return ret_json
 
-    async def fetch_course_path_data(self, slug: str):
+    async def fetch_course_path_data(self, slug: str) -> tuple[dict, list[dict]]:
         url = (
             f"https://www.linkedin.com/learning-api/detailedLearningPaths"
             f"?learningPathSlug={slug}&q=slug&version=2"
@@ -74,8 +74,10 @@ class Fetcher:
                 slug = content[list(content.keys())[0]]["slug"]
                 course_slugs.append(slug)
 
-        courses_data = await asyncio.gather(
-            *[self.fetch_course_data(slug) for slug in course_slugs]
+        courses_data = list(
+            await asyncio.gather(
+                *[self.fetch_course_data(slug) for slug in course_slugs]
+            )
         )
 
         return data, courses_data
@@ -118,5 +120,3 @@ class Fetcher:
                     async for data in response.content.iter_chunked(chunk_size):
                         pbar.update(len(data))
                         await f.write(data)
-
-        # url = f"https://www.linkedin.com/learning-api/detailedLearningPaths?learningPathSlug=advance-your-skills-in-python-8969631&q=slug&version=2"
