@@ -1,0 +1,16 @@
+name: Format
+
+on:
+  push:
+    branches: [ master, actions ]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: black
+        uses: lgeiger/black-action@master
+        with:
+          args: ". --check"
