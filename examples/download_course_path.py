@@ -20,7 +20,7 @@ async def main():
 
         slug = "advance-your-skills-in-python-8969631"
         course_path = await dl.fetch_course_path(slug)
-        course_path.print( )
+        course_path.print()
 
         # for course in course_path.children:
         #     tasks = [down for down in course.download()]
