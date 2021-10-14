@@ -1,16 +1,10 @@
-name: Format
+name: Lint
 
-on:
-  push:
-    branches: [ master, actions ]
-
+on: [push, pull_request]
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
-
     steps:
-      - name: black
-        uses: lgeiger/black-action@master
-        with:
-          args: ". --check"
+      - uses: actions/checkout@v2
+      - uses: psf/black@stable
