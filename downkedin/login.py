@@ -46,7 +46,8 @@ async def fetch_params(session: aiohttp.ClientSession) -> dict:
     }
 
 
-async def fetch_login_cookies(session: aiohttp.ClientSession, data: dict = None) -> None:
+async def fetch_login_cookies(session: aiohttp.ClientSession,
+                              data: dict = None) -> None:
     url = urljoin(str(HOME_URL), "checkpoint/lg/login-submit")
     await session.post(url, data=data, headers=HEADERS)
     filtered = session.cookie_jar.filter_cookies(HOME_URL)
