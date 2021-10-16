@@ -12,7 +12,7 @@ HEADERS = {"user-agent": "Mozilla/5.0"}
 async def check_signed_in(session: aiohttp.ClientSession) -> bool:
     async with session.get(HOME_URL) as response:
         html = await response.text()
-        return True if ">Sign in</" not in html else False
+        return bool(">Sign in</" not in html)
 
 
 async def fetch_params(session: aiohttp.ClientSession) -> dict:
